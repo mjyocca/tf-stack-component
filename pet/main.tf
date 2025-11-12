@@ -1,0 +1,42 @@
+terraform {
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "3.3.2"
+    }
+    null = {
+      source = "hashicorp/null"
+      version = "3.1.1"
+    }
+  }
+}
+#
+# TODO:
+#module "under_test" {
+#  source  = "hashicorp/dir/template"
+#  version = "1.0.2"
+
+#  base_dir = "${path.module}/src"
+#  template_vars = {
+#    name = "NAME IS"
+#  }
+#}
+
+variable "prefix" {
+  type = string
+}
+
+resource "random_pet" "this" {
+  prefix = var.prefix
+  length = 6
+}
+
+resource "random_pet" "dog" {
+  prefix = var.prefix
+  length = 8
+}
+
+output "name" {
+  value = random_pet.this.id
+}
+
